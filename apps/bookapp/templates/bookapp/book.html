@@ -1,0 +1,29 @@
+<a href='{% url 'books:index' %}'>Home</a><br>
+<a href='{% url 'login:logout' %}'>logout</a><br>
+
+{{book.title}}<br>
+Author: {{book.author}}<br>
+<form action='{% url 'books:addcomment' id=book.id %}' method='POST'>
+  {% csrf_token %}
+  Add a Review:<br>
+  <textarea name='comment' cols=30 rows=3></textarea><br>
+  Rating: <select name='rating'>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select> stars.<br>
+  <input type=submit name='submit' value='Submit Review'>
+</form>
+<h1>Reviews:</h1>
+{% for comment in comments %}
+  _______________________________________________________________________<br>
+  Rating: {{comment.rating}}<br>
+  <a href='{% url 'books:user' id=comment.user.id %}'>{{comment.user.first_name}}</a> says: {{comment.comment}}<br>
+  Posted on {{comment.created_at}}
+  {% if comment.user.id == request.session.id %}
+    <a href='{% url 'books:deletecomment' id=comment.id %}'>Delete this review</a>
+  {% endif %}
+  <br>
+{% endfor %}

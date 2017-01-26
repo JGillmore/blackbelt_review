@@ -1,0 +1,25 @@
+<a href='{% url 'books:index' %}'>Home</a><br>
+<a href='{% url 'login:logout' %}'>logout</a><br>
+
+<h1>Add a new book</h1>
+<form action='{% url 'books:addbook' %}' method='POST'>
+  {% csrf_token %}
+  Book Title: <input type='text' name='title'><br>
+  {% if books %}
+    Choose Author from the list: <select name='author'>
+      {% for book in books %}
+        <option value='{{book}}'>{{book}}</option>
+      {% endfor %}
+    </select><br>Or
+  {% endif %}
+  Add new Author: <input type='text' name='newauthor'><br>
+  Review: <textarea name='comment' cols=30 rows=4></textarea><br>
+  Rating: <select name='rating'>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select> stars.<br>
+  <input type='submit' name='submit' value='Add book and review'>
+</form>

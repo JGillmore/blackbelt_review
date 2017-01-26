@@ -1,0 +1,20 @@
+<h1>Welcome {{request.session.name}}</h1><br>
+<a href='{% url 'books:add' %}'>Add a book and review</a><br>
+<a href='{% url 'login:logout' %}'>logout</a><br>
+<br>
+<h2>Recent Book Reviews</h2>
+{% for comment in comments %}
+  _____________________________________________________________<br>
+  <a href='{% url 'books:book' id=comment.book.id %}'>{{comment.book.title}}</a><br>
+  rating: {{comment.rating}}<br>
+  <a href='{% url 'books:user' id=comment.user.id %}'>{{comment.user.first_name}}</a> says: {{comment.comment}}<br>
+  {{comment.created_at}}<br>
+{% endfor %}
+<br>
+<br>
+<br>
+
+<h2>Other books with reviews</h2>
+{% for book in books %}
+  <a href='{% url 'books:book' id=book.id %}'>{{book.title}}</a><br>
+{% endfor %}

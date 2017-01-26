@@ -1,0 +1,13 @@
+<a href='{% url 'books:index' %}'>Home</a><br>
+<a href='{% url 'books:add' %}'>Add a book and review</a><br>
+<a href='{% url 'login:logout' %}'>Logout</a><br>
+User Alias: {{user.first_name}}<br>
+Name: {{user.first_name}} {{user.last_name}}<br>
+email: {{user.email}}<br>
+Total reviews: {{count}}<br>
+Posted reviews on the following books:
+<ul>
+  {% for comment in comments %}
+    <li><a href='{% url 'books:book' id=comment.book.id %}'>{{comment.book.title}}</a></li>
+  {% endfor %}
+</ul>
